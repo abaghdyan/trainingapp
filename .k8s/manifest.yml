@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: trainingapp
+  name: trainingapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trainingapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: trainingapp
+    spec:
+      containers:
+      - image: docker.io/abaghdyan/trainingapp:1.0
+        name: trainingapp
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+          - containerPort: 80 
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: trainingapp
+  labels:
+    run: trainingapp
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: trainingapp
+  type: NodePort
